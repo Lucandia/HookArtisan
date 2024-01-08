@@ -10,9 +10,11 @@ Visit the original [Printables page](https://www.printables.com/it/model/714058-
 
 ## Customize
 
-- Text
-- Font size
-- Font
+- door hanger or shelf hanger
+- each dimension of the hanger and hook (width, thickness, length, arm length, ...)
+- customize the front and back sides of the hanger
+- add multi-hooks
+- generate a hanging box for your hanger with custom sizes
 
 Enjoy!
 
@@ -31,3 +33,4 @@ Code is licensed under the GNU General Public License v3.0 ([GPL-3.0](https://ww
 Models are licensed under the Creative Commons Non Commercial Share Alike License 4.0 ([CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/))
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
