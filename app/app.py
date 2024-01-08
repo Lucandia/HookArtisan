@@ -103,17 +103,17 @@ if __name__ == "__main__":
 
         # EXPORT HANGER
         cq.exporters.export(model, f"./app/static/model_{session_id}.stl")
-        cq.exporters.export(model, f"hanghub.{out_format}")
+        cq.exporters.export(model, f"HangArtisan.{out_format}")
         with st.sidebar:
             st.markdown("I am a student who enjoys 3D printing and programming. To support me with a coffee, just [click here!](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)", unsafe_allow_html=True)
-            if f'hanghub.{out_format}' not in os.listdir():
+            if f'HangArtisan.{out_format}' not in os.listdir():
                 st.error('The program was not able to generate the mesh.', icon="🚨")
             else:
-                with open(f'hanghub.{out_format}', "rb") as file:
+                with open(f'HangArtisan.{out_format}', "rb") as file:
                     btn = st.download_button(
                             label=f"Download {out_format}",
                             data=file,
-                            file_name=f'HangHub_{"_".join(model_type.split())}.{out_format}',
+                            file_name=f'HangArtisan_{"_".join(model_type.split())}.{out_format}',
                             mime=f"model/{out_format}"
                         )
         stl_preview('model', '#696969', "material")
@@ -142,16 +142,16 @@ if __name__ == "__main__":
             box = box(box_x, box_y, box_z, box_wall, honey_rad, closet_size, hanger_depth, front_height, thick, angle, hang_len, hooks)
             # EXPORT BOX
             cq.exporters.export(box, f"./app/static/box_{session_id}.stl")
-            cq.exporters.export(box, f"hanghub_box.{out_format}")
+            cq.exporters.export(box, f"HangArtisan_box.{out_format}")
             with st.sidebar:
-                if f'hanghub_box.{out_format}' not in os.listdir():
+                if f'HangArtisan_box.{out_format}' not in os.listdir():
                     st.error('The program was not able to generate the box.', icon="🚨")
                 else:
-                    with open(f'hanghub_box.{out_format}', "rb") as file:
+                    with open(f'HangArtisan_box.{out_format}', "rb") as file:
                         btn = st.download_button(
                                 label=f"Download {out_format}",
                                 data=file,
-                                file_name=f'HangHub_box.{out_format}',
+                                file_name=f'HangArtisan_box.{out_format}',
                                 mime=f"model/{out_format}"
                             )
             stl_preview('box', '#696969', "material") 
