@@ -31,7 +31,7 @@ def stl_preview(text, color, render):
         orbital_controls+' '+
         stl_viewer_component+' '+
         r'</script>'+
-        r'<stl-viewer model="app/static/' + text + '_' + str(session_id) + '.stl?cache='+str(time.time())+r'"></stl-viewer>'+
+        r'<stl-viewer model="./app/static/' + text + '_' + str(session_id) + '.stl?cache='+str(time.time())+r'"></stl-viewer>'+
         r'</div>',
         height = 500
         )
@@ -42,7 +42,7 @@ if __name__ == "__main__":
         st.session_state['session_id'] = uuid4()
     session_id = st.session_state['session_id']
     
-    st.title('HangHub')
+    st.title('HangArtisan')
     st.write("Generate hang hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/520333-texttango-dual-letter-illusion) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
 
     with st.sidebar:
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         model = shelves_hunger(closet_size, hanger_depth, front_height, thick, angle, hang_len, shelf_arm)
     
     # EXPORT HANGER
-    cq.exporters.export(model, f"app/static/model_{session_id}.stl")
+    cq.exporters.export(model, f"./app/static/model_{session_id}.stl")
     cq.exporters.export(model, f"hanghub.{out_format}")
     with st.sidebar:
         st.markdown("I am a student who enjoys 3D printing and programming. To support me with a coffee, just [click here!](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)", unsafe_allow_html=True)
@@ -125,7 +125,7 @@ if __name__ == "__main__":
 
 
         # EXPORT BOX
-        cq.exporters.export(box, f"app/static/box_{session_id}.stl")
+        cq.exporters.export(box, f"./app/static/box_{session_id}.stl")
         cq.exporters.export(box, f"hanghub_box.{out_format}")
         with st.sidebar:
             if f'hanghub_box.{out_format}' not in os.listdir():
