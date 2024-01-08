@@ -116,7 +116,7 @@ if __name__ == "__main__":
         with col2: box_y = st.slider('Box y', min_value=5, max_value=500, value=50)
         with col3: box_z = st.slider('Box z', min_value=5, max_value=200, value=40)
         col1, col2, col3 = st.columns(3)
-        with col1: box_wall = st.slider('Box wall', min_value=1, max_value=20, value=4)
+        with col1: box_wall = st.slider('Box wall', min_value=1.0, max_value=20.0, value=4.0)
         honey_rad = 0
         if hex_base:
             with col2:
