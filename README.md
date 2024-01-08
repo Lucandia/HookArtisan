@@ -1,26 +1,18 @@
-# TextTango: dual letter illusion
-"Generate a custom dual letter illusion, a 3d ambigram!
-Visit the original [Printables page](https://www.printables.com/it/model/520333-texttango-dual-letter-illusion)!
+# HangArtisan
+"Generate a custom door/shelf hanger and hang box!
+Visit the original [Printables page](https://www.printables.com/it/model/714058-hangartisan-custom-hanger-generator)!
 
 ## Try the web app:
 
-[TextTango web app](https://dual-letter-illusion.streamlit.app/) powered by streamlit
+[HangArtisan web app](https://hangartisan.streamlit.app/#hangartisan) powered by streamlit
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://dual-letter-illusion.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://hangartisan.streamlit.app/#hangartisan)
 
 ## Customize
 
 - Text
 - Font size
 - Font
-- **All Google fonts** are included
-- **Export the STEP file** for further modifications
-
-There are cool dual-letter generators online, but I wanted to make a project:
-
-- Free tool (some programs are paid)
-- No installation is required (you can use the Web App)
-- Fully implemented in Python
 
 Enjoy!
 

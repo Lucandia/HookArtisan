@@ -43,7 +43,7 @@ if __name__ == "__main__":
     session_id = st.session_state['session_id']
     
     st.title('HangArtisan')
-    st.write("Generate hang hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/520333-texttango-dual-letter-illusion) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
+    st.write("Generate hang hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/714058-hangartisan-custom-hanger-generator) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
 
     with st.sidebar:
         model_type = st.selectbox('Model type', ["Door Hanger", "Shelf Hanger"])
@@ -77,7 +77,7 @@ if __name__ == "__main__":
         with col2: hang_len = st.slider('Arm length', min_value=10, max_value=100, value=25)
 
         if not mirror:
-            with col3: back_height = st.slider('Back length', min_value=2, max_value=500, value=50)
+            with col3: back_height = st.slider('Back length', min_value=2, max_value=500, value=25)
         col1, col2, col3 = st.columns(3)
         if back_hook:
             with col2: back_hanger_len = st.slider('Back arm length', min_value=10, max_value=100, value=25)
@@ -132,7 +132,7 @@ if __name__ == "__main__":
         with col2: box_y = st.slider('Box y', min_value=5, max_value=500, value=50)
         with col3: box_z = st.slider('Box z', min_value=5, max_value=200, value=40)
         col1, col2, col3 = st.columns(3)
-        with col1: box_wall = st.slider('Box wall', min_value=1.0, max_value=20.0, value=4.0)
+        with col1: box_wall = st.slider('Wall thickness', min_value=1.0, max_value=20.0, value=4.0)
         honey_rad = 0
         if hex_base:
             with col2:
