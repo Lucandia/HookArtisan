@@ -1,8 +1,8 @@
 import cadquery as cq
 from math import cos, tan, sin, pi, sqrt
-tollerance = 0.7
+tollerance = 0.6
 
-def points_hanger(closet_size, height, thick, angle, hanger_len = None, right=True):
+def points_hanger(closet_size, height, thick, angle, hanger_len = None, hooks = 0, right=True, shelves_hang = None):
     angle_rad = angle/180*pi
     if right: sign = 1
     else: sign = -1
@@ -18,63 +18,64 @@ def points_hanger(closet_size, height, thick, angle, hanger_len = None, right=Tr
             (0, -thick),
             ]      
     else:
-        pts = [
-            (0, 0),
-            (x0, 0),
+        if shelves_hang:
+            y0 = - height - closet_size - thick * 2
+            x0 = 0
+            sign = +1
+            start = [
+                    (-shelves_hang - thick, 0),
+                    (0, 0),
+                    ]
+            end = [
+                    (-thick, - closet_size - thick * 2),
+                    (-thick -  shelves_hang, - closet_size - thick * 2),
+                    (-thick -  shelves_hang, - closet_size - thick),
+                    (-thick, - closet_size - thick),
+                    (-thick, - thick),
+                    (-thick -  shelves_hang, - thick),
+                    ]
+        else:
+            start = [
+                (0, 0),
+                (x0, 0),
+                ]
+            end = [ 
+                    (x0 -sign * thick, -thick),
+                    (0, -thick)
+                    ]
+        for _ in range(hooks-1):
+            start += [
+                    (x0, y0),
+                    (x0 + sign * hanger_len*sin(angle_rad), y0 + hanger_len*cos(angle_rad)),
+                    (x0 + sign * (hanger_len*sin(angle_rad) + thick*cos(angle_rad)), y0 + hanger_len*cos(angle_rad) - thick*sin(angle_rad)),
+                    (x0, y0 - (thick/cos(angle_rad))/tan(angle_rad)),
+                    ]
+            y0 -= height
+        middle = [
             (x0, y0),
             (x0 + sign * hanger_len*sin(angle_rad), y0 + hanger_len*cos(angle_rad)),
             (x0 + sign * (hanger_len*sin(angle_rad) + thick*cos(angle_rad)), y0 + hanger_len*cos(angle_rad) - thick*sin(angle_rad)),
             (x0 -sign * thick, y0 - (thick+thick/cos(angle_rad))/tan(angle_rad)),
-            (x0 -sign * thick, -thick),
-            (0, -thick),
             ]
+        pts = start + middle + end
     return pts
 
-def normal_hanger(closet_size, hanger_depth, front_height, thick, angle, hanger_len, back_height, back_angle, back_hanger_len, mirror):
-    pts = points_hanger(closet_size, front_height, thick, angle, hanger_len) 
-    if not mirror:
-        pts += points_hanger(closet_size, back_height, thick, back_angle, back_hanger_len, right=False)[::-1][1:]
+def hanger(closet_size, hanger_depth, front_height, thick, angle, hanger_len, back_height, back_angle, back_hanger_len, mirror, hooks, back_hooks, shelves_hang):
+    pts = points_hanger(closet_size, front_height, thick, angle, hanger_len, hooks, right=True, shelves_hang=shelves_hang) 
+    if not mirror and not shelves_hang:
+        pts += points_hanger(closet_size, back_height, thick, back_angle, back_hanger_len, back_hooks, right=False)[::-1][1:]
     hanger = (cq.Workplane("XY")
             .polyline(pts)
             .close()
             .extrude(hanger_depth))
-    if mirror:
+    if mirror and not shelves_hang:
         hanger =  hanger.mirror('YZ', union=True)
     hanger = hanger.edges("|Z").fillet(thick/5)
     return hanger
 
-        
-def shelves_hunger(closet_size, hanger_depth, front_height, thick, angle, hang_len, shelves_hang):
-    def points_hanger_shelves(height, thick, angle, hanger_len, shelves_hang):
-        angle_rad = angle/180*pi
-        y0 = - height - closet_size - thick * 2  
-        pts = [
-            (-shelves_hang - thick, 0),
-            (0, 0),
-            (0, y0),
-            (0 + hanger_len*sin(angle_rad), y0 + hanger_len*cos(angle_rad)),
-            (hanger_len*sin(angle_rad) + thick*cos(angle_rad), y0 + hanger_len*cos(angle_rad) - thick*sin(angle_rad)),
-            (-thick, y0 - (thick+thick/cos(angle_rad))/tan(angle_rad)),
-            (-thick, - closet_size - thick * 2),
-            (-thick -  shelves_hang, - closet_size - thick * 2),
-            (-thick -  shelves_hang, - closet_size - thick),
-            (-thick, - closet_size - thick),
-            (-thick, -thick),
-            (-thick -  shelves_hang, -thick),
-            ]
-        return pts
-    pts_shelv = points_hanger_shelves(front_height, thick, angle, hang_len, shelves_hang)
-    hanger_shelv = (cq.Workplane("XY")
-            .polyline(pts_shelv)
-            .close()
-            .extrude(hanger_depth)
-            .edges("|Z")
-            .fillet(thick/5)
-            )
-    return hanger_shelv
 
-def box(box_x, box_y, box_z, box_wall, honey_rad, closet_size, hanger_depth, front_height, thick, angle, hang_len):
-    pts_diff = points_hanger(closet_size, front_height, thick + tollerance, angle, hang_len+tollerance)
+def box(box_x, box_y, box_z, box_wall, honey_rad, closet_size, hanger_depth, front_height, thick, angle, hang_len, hooks):
+    pts_diff = points_hanger(closet_size, front_height, thick + tollerance, angle, hang_len+tollerance, hooks)
     hanger_diff = (cq.Workplane("XY")
                     .polyline(pts_diff)
                     .close()
@@ -85,7 +86,7 @@ def box(box_x, box_y, box_z, box_wall, honey_rad, closet_size, hanger_depth, fro
 
     box = ( cq.Workplane()
             .box(box_y-box_wall*2, box_z-box_wall, box_x-box_wall*2)
-            .translate((closet_size/2 + thick + box_y/2 + tollerance, -front_height + -thick + box_z/2 - box_wall, 0))
+            .translate((closet_size/2 + thick + box_y/2 + tollerance, -front_height*hooks + -thick + box_z/2 - box_wall, 0))
             .faces('>Y')
             .shell(box_wall)
             )
@@ -109,4 +110,3 @@ def box(box_x, box_y, box_z, box_wall, honey_rad, closet_size, hanger_depth, fro
             .cutThruAll()
             )
     return box
-
