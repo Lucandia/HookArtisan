@@ -15,6 +15,7 @@ Visit the original [Printables page](https://www.printables.com/it/model/714058-
 - customize the front and back sides of the hanger
 - add multi-hooks
 - generate a hanging box for your hanger with custom sizes
+- export STL or STEP file
 
 Enjoy!
 
