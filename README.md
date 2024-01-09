@@ -1,12 +1,12 @@
-# HangArtisan
+# HookArtisan
 "Generate a custom door/shelf hanger and hang box!
-Visit the original [Printables page](https://www.printables.com/it/model/714058-hangartisan-custom-hanger-generator)!
+Visit the original [Printables page](https://www.printables.com/it/model/714058-HookArtisan-custom-hanger-generator)!
 
 ## Try the web app:
 
-[HangArtisan web app](https://hangartisan.streamlit.app/#hangartisan) powered by streamlit
+[HookArtisan web app](https://HookArtisan.streamlit.app/#HookArtisan) powered by streamlit
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://hangartisan.streamlit.app/#hangartisan)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://HookArtisan.streamlit.app/#HookArtisan)
 
 ## Customize
 
