@@ -42,8 +42,8 @@ if __name__ == "__main__":
         st.session_state['session_id'] = uuid4()
     session_id = st.session_state['session_id']
     
-    st.title('HangArtisan')
-    st.write("Generate hang hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/714058-hangartisan-custom-hanger-generator) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
+    st.title('HookArtisan')
+    st.write("Generate hang hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/714058-HookArtisan-custom-hanger-generator) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
 
     with st.sidebar:
         model_type = st.selectbox('Model type', ["Door Hanger", "Shelf Hanger"])
@@ -103,17 +103,17 @@ if __name__ == "__main__":
 
         # EXPORT HANGER
         cq.exporters.export(model, f"./app/static/model_{session_id}.stl")
-        cq.exporters.export(model, f"HangArtisan.{out_format}")
+        cq.exporters.export(model, f"HookArtisan.{out_format}")
         with st.sidebar:
             st.markdown("I am a student who enjoys 3D printing and programming. To support me with a coffee, just [click here!](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)", unsafe_allow_html=True)
-            if f'HangArtisan.{out_format}' not in os.listdir():
+            if f'HookArtisan.{out_format}' not in os.listdir():
                 st.error('The program was not able to generate the mesh.', icon="🚨")
             else:
-                with open(f'HangArtisan.{out_format}', "rb") as file:
+                with open(f'HookArtisan.{out_format}', "rb") as file:
                     btn = st.download_button(
                             label=f"Download {out_format}",
                             data=file,
-                            file_name=f'HangArtisan_{"_".join(model_type.split())}.{out_format}',
+                            file_name=f'HookArtisan_{"_".join(model_type.split())}.{out_format}',
                             mime=f"model/{out_format}"
                         )
         stl_preview('model', '#696969', "material")
@@ -142,16 +142,16 @@ if __name__ == "__main__":
             box = box(box_x, box_y, box_z, box_wall, honey_rad, closet_size, hanger_depth, front_height, thick, angle, hang_len, hooks)
             # EXPORT BOX
             cq.exporters.export(box, f"./app/static/box_{session_id}.stl")
-            cq.exporters.export(box, f"HangArtisan_box.{out_format}")
+            cq.exporters.export(box, f"HookArtisan_box.{out_format}")
             with st.sidebar:
-                if f'HangArtisan_box.{out_format}' not in os.listdir():
+                if f'HookArtisan_box.{out_format}' not in os.listdir():
                     st.error('The program was not able to generate the box.', icon="🚨")
                 else:
-                    with open(f'HangArtisan_box.{out_format}', "rb") as file:
+                    with open(f'HookArtisan_box.{out_format}', "rb") as file:
                         btn = st.download_button(
                                 label=f"Download {out_format}",
                                 data=file,
-                                file_name=f'HangArtisan_box.{out_format}',
+                                file_name=f'HookArtisan_box.{out_format}',
                                 mime=f"model/{out_format}"
                             )
             stl_preview('box', '#696969', "material") 
