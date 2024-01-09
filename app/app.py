@@ -43,10 +43,10 @@ if __name__ == "__main__":
     session_id = st.session_state['session_id']
     
     st.title('HookArtisan')
-    st.write("Generate hang hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/714058-HookArtisan-custom-hanger-generator) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
+    st.write("Generate hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/714058-HookArtisan-custom-hanger-generator) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
 
     with st.sidebar:
-        model_type = st.selectbox('Model type', ["Door Hanger", "Shelf Hanger"])
+        model_type = st.selectbox('Model type', ["Door Hook", "Shelf Hook"])
         closet_size = st.number_input('Door thickness (mm)', value=20.0)
         hooks = st.number_input('N° hooks', min_value=1, value=1)
         out_format = st.selectbox("Output format", ['stl', 'step'])
@@ -58,8 +58,8 @@ if __name__ == "__main__":
     back_hooks = 1 
     shelf_arm = 0
 
-    st.subheader("Hanger parameters (mm):")
-    if model_type == 'Door Hanger':
+    st.subheader("Hook parameters (mm):")
+    if model_type == 'Door Hook':
         with st.sidebar:
             mirror = st.toggle('Mirror')
             back_hook = False
@@ -86,8 +86,7 @@ if __name__ == "__main__":
         
         # model = normal_hanger(closet_size, hanger_depth, front_height, thick, angle, hang_len, back_height, back_angle, back_hanger_len, mirror, hooks)
         
-    if model_type == 'Shelf Hanger':    
-        st.write("Hanger parameters (mm):")
+    if model_type == 'Shelf Hook':    
         col1, col2, col3 = st.columns(3)
         with col1: hanger_depth = st.slider('Width', min_value=5, max_value=100, value=10)
         with col2: front_height = st.slider('Length', min_value=2, max_value=500, value=50)
@@ -122,7 +121,7 @@ if __name__ == "__main__":
 
     # add the box
     with st.sidebar:
-        add_box = st.toggle(':green[Create Hanger Box]')
+        add_box = st.toggle(':green[Create Hook Box]')
         if add_box:
             hex_base = st.toggle('Hex Holes')
     if add_box:
