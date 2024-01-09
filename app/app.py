@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     with st.sidebar:
         model_type = st.selectbox('Model type', ["Door Hook", "Shelf Hook"])
-        closet_size = st.number_input('Door thickness (mm)', value=20.0)
+        closet_size = st.number_input('Door/shelf thickness (mm)', value=20.0)
         hooks = st.number_input('N° hooks', min_value=1, value=1)
         out_format = st.selectbox("Output format", ['stl', 'step'])
 
