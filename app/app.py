@@ -1,47 +1,10 @@
 import cadquery as cq
 import streamlit as st
-import time
 import os
-from uuid import uuid4
+from streamlit_stl import stl_from_file
 from models import *
 
-def stl_preview(text, color, render):
-    # Load and embed the JavaScript file
-    with open("js/three.min.js", "r") as js_file:
-        three_js = js_file.read()
-
-    with open("js/STLLoader.js", "r") as js_file:
-        stl_loader = js_file.read()
-
-    with open("js/OrbitControls.js", "r") as js_file:
-        orbital_controls = js_file.read()
-
-    with open("js/stl-viewer.js", "r") as js_file:
-        stl_viewer_component = (
-            js_file.read()
-            .replace('{__REPLACE_COLOR__}',f'0x{color[1:]}')
-            .replace('{__REPLACE_MATERIAL__}',render)
-        )
-    session_id = st.session_state['session_id']
-    st.components.v1.html(
-        r'<div style="height:500px">'+
-        r'<script>'+
-        three_js+' '+
-        stl_loader+' '+
-        orbital_controls+' '+
-        stl_viewer_component+' '+
-        r'</script>'+
-        r'<stl-viewer model="./app/static/' + text + '_' + str(session_id) + '.stl?cache='+str(time.time())+r'"></stl-viewer>'+
-        r'</div>',
-        height = 500
-        )
-
 if __name__ == "__main__":
-    # initialize session id
-    if "session_id" not in st.session_state:
-        st.session_state['session_id'] = uuid4()
-    session_id = st.session_state['session_id']
-    
     st.title('HookArtisan')
     st.write("Generate hooks and hang boxes for you personal shelves.  If you like the project put a like on [Printables](https://www.printables.com/it/model/714058-HookArtisan-custom-hanger-generator) or [support me with a coffee](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)!", unsafe_allow_html=True)
 
@@ -101,7 +64,7 @@ if __name__ == "__main__":
         model = hanger(closet_size, hanger_depth, front_height, thick, angle, hang_len, back_height, back_angle, back_hanger_len, mirror, hooks, back_hooks, shelf_arm)
 
         # EXPORT HANGER
-        cq.exporters.export(model, f"./app/static/model_{session_id}.stl")
+        cq.exporters.export(model, "hook_artisan_display.stl")
         cq.exporters.export(model, f"HookArtisan.{out_format}")
         with st.sidebar:
             st.markdown("I am a student who enjoys 3D printing and programming. To support me with a coffee, just [click here!](https://www.paypal.com/donate/?hosted_button_id=V4LJ3Z3B3KXRY)", unsafe_allow_html=True)
@@ -115,7 +78,7 @@ if __name__ == "__main__":
                             file_name=f'HookArtisan_{"_".join(model_type.split())}.{out_format}',
                             mime=f"model/{out_format}"
                         )
-        stl_preview('model', '#696969', "material")
+        stl_from_file("hook_artisan_display.stl", color='#696969')
     except:
         st.error('The program was not able to generate the mesh. Try different parameters,', icon="🚨")
 
@@ -140,7 +103,7 @@ if __name__ == "__main__":
         try:
             box = box(box_x, box_y, box_z, box_wall, honey_rad, closet_size, hanger_depth, front_height, thick, angle, hang_len, hooks)
             # EXPORT BOX
-            cq.exporters.export(box, f"./app/static/box_{session_id}.stl")
+            cq.exporters.export(box, "box_display.stl")
             cq.exporters.export(box, f"HookArtisan_box.{out_format}")
             with st.sidebar:
                 if f'HookArtisan_box.{out_format}' not in os.listdir():
@@ -153,7 +116,7 @@ if __name__ == "__main__":
                                 file_name=f'HookArtisan_box.{out_format}',
                                 mime=f"model/{out_format}"
                             )
-            stl_preview('box', '#696969', "material") 
+            stl_from_file("box_display.stl", color='#696969')
         except:
             st.error('The program was not able to generate the mesh. Try different parameters,', icon="🚨")
         
